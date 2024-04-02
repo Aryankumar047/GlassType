@@ -39,3 +39,54 @@ y = glass_df['GlassType']
 
 # Spliting the data into training and testing sets.
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 42)
+
+@st.cache()
+def prediction(model,ri,na,mg,al,si,k,ca,ba,fe):
+  glass_type=model.predict([ri,na,mg,al,si,k,ca,ba,fe])
+  glass_type=glass_type[0]
+  if glass_type == 1:
+    return "building windows float processed"
+  elif glass_type == 2:
+    return "building windows non float processed"
+  elif glass_type == 3:
+    return "vehicle windows float processed"
+  elif glass_type == 4:
+    return "vehicle windows non float processed"
+  elif glass_type == 5:
+    return "containers"
+  elif glass_type == 6:
+    return "tableware"
+  else:
+    return "Headlamp"
+
+st.title('Glass Type Predictor')
+st.sidebar.title('Exploratory Data Analysis')
+
+if st.sidebar.checkbox('Show raw data'):
+  st.subheader('Full Dataset')
+  st.dataframe(glass_df)
+
+st.sidebar.subheader('Scatter Plot')
+features_list=st.sidebar.multiselect('Select X axis values:',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
+st.set_option('deprecation.showPyplotGlobalUse', False)
+for i in features_list:
+  st.subheader(f'Scatter plot between {i} and GlassType')
+  plt.figure(figsize=(6,5))
+  sns.scatterplot(x=glass_df[i],y=glass_df['GlassType'])
+  st.pyplot()
+
+st.sidebar.subheader('Histogram')
+features=st.sidebar.multiselect('Chosse the values:',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
+for j in features:
+  st.subheader(f'Histogram of {j}')
+  plt.figure(figsize=(7,5))
+  plt.hist(glass_df[j],bins='sturges',edgecolor='black')
+  st.pyplot()
+
+st.sidebar.subheader('Boxplot')
+feats=st.sidebar.multiselect('Choose the values:',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
+for k in feats:
+  st.subheader(f'Boxplot for {k}')
+  plt.figure(figsiz=(7,5))
+  sns.boxplot(glass_df[k])
+  st.pyplot()
