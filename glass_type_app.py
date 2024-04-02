@@ -67,26 +67,13 @@ if st.sidebar.checkbox('Show raw data'):
   st.dataframe(glass_df)
 
 st.sidebar.subheader('Scatter Plot')
-features_list=st.sidebar.multiselect('Select X axis values:',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
 st.set_option('deprecation.showPyplotGlobalUse', False)
-for i in features_list:
-  st.subheader(f'Scatter plot between {i} and GlassType')
+feats_list=st.sidebar.multiselect('Select X-axis values',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe', 'GlassType'))
+for i in feats_list:
   plt.figure(figsize=(6,5))
-  sns.scatterplot(x=glass_df[i],y=glass_df['GlassType'])
+  sns.scatterplot(glass_df[i],glass_df['Glasstype'])
   st.pyplot()
 
-st.sidebar.subheader('Histogram')
-features=st.sidebar.multiselect('Chosse the values:',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
-for j in features:
-  st.subheader(f'Histogram of {j}')
-  plt.figure(figsize=(7,5))
-  plt.hist(glass_df[j],bins='sturges',edgecolor='black')
-  st.pyplot()
+st.sidebar.subheader('Visulisation Selector')
+plot_types=st.sidebar.multiselect('Select the charts of plots',('Histogram', 'Box Plot', 'Count Plot', 'Pie Chart', 'Correlation Heatmap', 'Pair Plot'))
 
-st.sidebar.subheader('Boxplot')
-feats=st.sidebar.multiselect('Choose the values:',('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
-for k in feats:
-  st.subheader(f'Boxplot for {k}')
-  plt.figure(figsiz=(7,5))
-  sns.boxplot(glass_df[k])
-  st.pyplot()
