@@ -56,7 +56,7 @@ if st.sidebar.checkbox("Show raw data"):
     st.dataframe(glass_df)
 st.sidebar.subheader("Scatter Plot")
 features_list = st.sidebar.multiselect("Select the x-axis values:",
-                                            ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe')
+                                            ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
 st.set_option('deprecation.showPyplotGlobalUse', False)
 for feature in features_list:
     st.subheader(f"Scatter plot between {feature} and GlassType")
